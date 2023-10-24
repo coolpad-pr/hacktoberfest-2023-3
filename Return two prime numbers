@@ -1,0 +1,36 @@
+Given an even number N (greater than 2), return two prime numbers whose sum will be equal to given number. There are several combinations possible. Print only the pair whose minimum value is the smallest among all the minimum values of pairs and print the minimum element first.
+
+NOTE: A solution will always exist, read Goldbachs conjecture. 
+
+Example 1:
+
+Input: N = 74
+Output: 3 71
+Explaination: There are several possibilities 
+like 37 37. But the minimum value of this pair 
+is 3 which is smallest among all possi
+
+def sieve_eratosthenes(limit):
+    primes = [True] * (limit + 1)
+    p = 2
+    while p * p <= limit:
+        if primes[p]:
+            for i in range(p * p, limit + 1, p):
+                primes[i] = False
+        p += 1
+    prime_numbers = [i for i in range(2, limit + 1) if primes[i]]
+    return prime_numbers
+
+def findPrimePair(N):
+    if N < 4:
+        return None
+
+    primes = sieve_eratosthenes(N)
+    for prime in primes:
+        if primes[N - prime]:
+            return [prime, N - prime]
+
+# Example usage:
+N = 74
+result = findPrimePair(N)
+print(result)  # Output: [3, 71]
